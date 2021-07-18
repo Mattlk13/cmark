@@ -10,7 +10,7 @@ import multiprocessing
 import time
 from cmark import CMark
 
-TIMEOUT = 7
+TIMEOUT = 10
 
 parser = argparse.ArgumentParser(description='Run cmark tests.')
 parser.add_argument('--program', dest='program', nargs='?', default=None,
@@ -67,6 +67,9 @@ pathological = {
     "mismatched openers and closers":
                  (("*a_ " * 50000),
                   re.compile("([*]a[_] ){49999}[*]a_")),
+    "issue #389":
+                 (("*a " * 20000 + "_a*_ " * 20000),
+                  re.compile("(<em>a ){20000}(_a<\/em>_ ?){20000}")),
     "openers and closers multiple of 3":
                  (("a**b" + ("c* " * 50000)),
                   re.compile("a[*][*]b(c[*] ){49999}c[*]")),
